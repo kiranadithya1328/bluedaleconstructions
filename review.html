@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Review</title>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+        
+        nav {
+            background: #1f2937;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        nav a {
+            color: #fff;
+            margin: 0 12px;
+            text-decoration: none;
+        }
+        /* ===== HEADER FIX ===== */
+        
+        .site-header {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            color: white;
+            padding: 16px 12px;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .brand img {
+            width: 70px;
+            height: auto;
+        }
+        
+        .brand-text h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+        
+        .brand-text p {
+            margin: 4px 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .main-nav {
+            margin-top: 14px;
+            text-align: center;
+        }
+        
+        .main-nav a {
+            color: #e5e7eb;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+        }
+        
+        .main-nav a:hover {
+            color: #facc15;
+        }
+        
+        .container {
+            max-width: 420px;
+            margin: 25px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        input,
+        textarea,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        
+        textarea {
+            resize: none;
+        }
+        
+        button {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #1e40af;
+        }
+        
+        .rating-group {
+            margin: 14px 0;
+        }
+        
+        .rating-title {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        
+        .stars {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .star {
+            font-size: 26px;
+            cursor: pointer;
+            color: #ccc;
+        }
+        
+        .star.active {
+            color: #f5b301;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="brand">
+            <img src="WhatsApp Image 2025-09-21 at 22.55.38.jpeg" alt="Company Logo">
+            <div class="brand-text">
+                <h1>Blue Dale Constructions</h1>
+                <p>Building Trust. Creating Value.</p>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="works.html">Works Done</a>
+            <a href="review.html">Reviews</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <div class="page-content">
+        <div class="container">
+            <h2>Client Review</h2>
+
+            <form id="reviewForm">
+                <label>Your Name</label>
+                <input name="name" placeholder="Your Name" required>
+                <label>Enter Email</label>
+                <input name="email" type="email" placeholder="Email Address" required>
+                <label>Enter Mobile Number</label>
+                <input name="phone" placeholder="Mobile Number" required>
+
+                <div class="rating-group">
+                    <div class="rating-title">Curing</div>
+                    <div class="stars" data-name="curing"></div>
+                </div>
+
+                <div class="rating-group">
+                    <div class="rating-title">Work Quality</div>
+                    <div class="stars" data-name="work_quality"></div>
+                </div>
+
+                <div class="rating-group">
+                    <div class="rating-title">Staff Behaviour</div>
+                    <div class="stars" data-name="staff_behaviour"></div>
+                </div>
+
+                <div class="rating-group">
+                    <div class="rating-title">Site Cleaning</div>
+                    <div class="stars" data-name="site_cleaning"></div>
+                </div>
+
+                <div class="rating-group">
+                    <div class="rating-title">Creativity from the Builder</div>
+                    <div class="stars" data-name="creativity"></div>
+                </div>
+
+                <div class="rating-group">
+                    <div class="rating-title">Overall Rating</div>
+                    <div class="stars" data-name="overall"></div>
+                </div>
+                <label>Type here for anyother reviews </label>
+                <textarea name="comments" rows="3" placeholder="Comments"></textarea>
+
+                <button type="submit">Submit Review</button>
+
+            </form>
+        </div>
+    </div>
+    <script>
+        /* STAR GENERATION */
+        document.querySelectorAll(".stars").forEach(box => {
+            for (let i = 1; i <= 5; i++) {
+                let star = document.createElement("span");
+                star.innerHTML = "★";
+                star.className = "star";
+                star.dataset.value = i;
+                box.appendChild(star);
+            }
+
+            box.addEventListener("click", e => {
+                if (e.target.classList.contains("star")) {
+                    let value = e.target.dataset.value;
+                    box.dataset.rating = value;
+                    box.querySelectorAll(".star").forEach(s => {
+                        s.classList.toggle("active", s.dataset.value <= value);
+                    });
+                }
+            });
+        });
+
+        /* EMAILJS INIT */
+        emailjs.init("yrdzyebZJ2WXG89PQ");
+
+        /* GOOGLE SHEET URL */
+        const sheetURL =
+            "https://script.google.com/macros/s/AKfycbzGxkLOI4VUhlNOGGMyctBkUQ1A544FvtQZ7U9Z-wVQRy1HqpZaL-LwXeAfpmuI-MO2Rw/exec";
+
+        document.getElementById("reviewForm").addEventListener("submit", e => {
+            e.preventDefault();
+
+            let form = e.target;
+
+            const data = {
+                name: form.name.value,
+                email: form.email.value,
+                phone: form.phone.value,
+                curing: document.querySelector('[data-name="curing"]').dataset.rating || 0,
+                work_quality: document.querySelector('[data-name="work_quality"]').dataset.rating || 0,
+                staff_behaviour: document.querySelector('[data-name="staff_behaviour"]').dataset.rating || 0,
+                site_cleaning: document.querySelector('[data-name="site_cleaning"]').dataset.rating || 0,
+                creativity: document.querySelector('[data-name="creativity"]').dataset.rating || 0,
+                overall: document.querySelector('[data-name="overall"]').dataset.rating || 0,
+                comments: form.comments.value
+            };
+
+            // OPTIONAL: make overall rating mandatory
+            if (!data.overall || data.overall == 0) {
+                alert("Please select Overall Rating");
+                return;
+            }
+
+            fetch(sheetURL, {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                })
+                .then(() => {
+                    return emailjs.send("service_bithh1n", "template_dvf4jv9", {
+                        name: data.name,
+                        email: data.email,
+                        overall: data.overall
+                    });
+                })
+                .then(() => {
+                    alert("Thank you! Your review has been submitted.");
+                    form.reset();
+                    document
+                        .querySelectorAll(".star")
+                        .forEach(s => s.classList.remove("active"));
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Submission failed. Please try again.");
+                });
+        });
+    </script>
+
+</body>
+
+</html>
